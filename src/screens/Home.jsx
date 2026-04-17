@@ -86,7 +86,7 @@ export default function Home({ user, onToggleNotifications, onLogout }) {
   }
 
   return (
-    <div className="min-h-screen bg-gray-100">
+    <div className="min-h-screen bg-gray-100 pt-3">
       {showPasswordForm && (
         <div className="fixed inset-0 bg-black/30 flex items-center justify-center">
           <div className="bg-white p-6 rounded-xl w-80 shadow-lg">
@@ -131,8 +131,8 @@ export default function Home({ user, onToggleNotifications, onLogout }) {
       )}
 
       {/* 🔝 App Bar */}
-      <div className="w-full bg-white shadow-sm px-6 py-4 flex justify-between items-center">
-        <h1 className="text-xl font-semibold">One Sync</h1>
+      <div className="w-[98vw] rounded-lg bg-white shadow-sm px-6 py-2 mx-auto flex justify-between items-center">
+        <h1 className="text-xl font-semibold mt-1">One Sync</h1>
 
         <div className="flex items-center gap-4">
 
@@ -182,7 +182,7 @@ export default function Home({ user, onToggleNotifications, onLogout }) {
       </div>
 
       {/* 📦 Main Content */}
-      <div className="p-6 grid grid-cols-1 md:grid-cols-2 gap-6">
+      <div className="p-6 grid grid-cols-1 md:grid-cols-2 gap-4">
 
         {/* 📘 Instructions Card */}
         <div className="bg-white rounded-xl shadow-sm p-5 flex flex-col">
@@ -202,7 +202,7 @@ export default function Home({ user, onToggleNotifications, onLogout }) {
 
             <ul className="text-gray-600 text-sm space-y-2">
               <li>1. Download and install the app by scanning the QR</li>
-              <li>2. Sign in to the app with your google account: <u className="text-green-600">{user.email}</u></li>
+              <li>2. Sign in to the app with your account: <u className="text-green-600">{user.email}</u></li>
               <li>3. Provide the necessary device permissions for the app</li>
             </ul>
           </div>
@@ -210,7 +210,7 @@ export default function Home({ user, onToggleNotifications, onLogout }) {
         </div>
 
         {/* 🔔 Notifications */}
-        <div className="flex flex-col gap-4">
+        <div className="flex flex-col gap-3">
           <div className="bg-white rounded-xl shadow-sm p-5 flex justify-between items-center">
             <div className="">
               <h2 className="text-lg font-semibold ">
