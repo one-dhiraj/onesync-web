@@ -132,7 +132,7 @@ export default function Home({ user, onToggleNotifications, onLogout }) {
 
       {/* 🔝 App Bar */}
       <div className="w-full bg-white shadow-sm px-6 py-4 flex justify-between items-center">
-        <h1 className="text-xl font-semibold">OneSync</h1>
+        <h1 className="text-xl font-semibold">One Sync</h1>
 
         <div className="flex items-center gap-4">
 

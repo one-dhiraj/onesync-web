@@ -33,12 +33,15 @@ export default function Login({ onLogin }) {
 
   const handleEmailAuth = async () => {
     try {
+      setIsLoading(true);
       const result = isSignup
         ? await signupWithEmail(email, password)
         : await loginWithEmail(email, password);
       onLogin(result.user);
     } catch (err) {
       alert(err.message);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -85,63 +88,65 @@ export default function Login({ onLogin }) {
               </p>
             </>
           ) : (
-          <div>
-          {/* Email input */}
-          <input
-            type="email"
-            placeholder="Email"
-            className="w-full mb-3 px-3 py-2 border rounded-lg"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-          />
+            <div>
+              {/* Email input */}
+              <input
+                type="email"
+                placeholder="Email"
+                className="w-full mb-3 px-3 py-2 border rounded-lg"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+              />
 
-          {/* Password input */}
-          <input
-            type="password"
-            placeholder="Password"
-            className="w-full mb-4 px-3 py-2 border rounded-lg"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-          />
+              {/* Password input */}
+              <input
+                type="password"
+                placeholder="Password"
+                className="w-full mb-4 px-3 py-2 border rounded-lg"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+              />
 
-          {/* Email login/signup */}
-          <button
-            onClick={handleEmailAuth}
-            className={`w-full py-3 rounded-lg font-semibold ${isLoading
-              ? "bg-gray-300 text-gray-500 cursor-not-allowed"
-              : "bg-indigo-600 hover:bg-indigo-700 text-white"
-            }`}
-          >
-            {isSignup ? "Sign Up" : "Login"}
-          </button>
+              {/* Email login/signup */}
+              <button
+                onClick={handleEmailAuth}
+                className={`w-full flex items-center justify-center gap-3 transition pt-3 pb-2 rounded-lg font-semibold ${isLoading
+                  ? "bg-gray-300 text-gray-500 cursor-not-allowed"
+                  : "bg-indigo-600 hover:bg-indigo-700 text-white"
+                  }`}
+                disabled={isLoading}
+              >
+                {isSignup ? "Sign Up" : "Login"}
+              </button>
 
-          {/* Divider */}
-          <div className="text-gray-700 text-md my-2">or</div>
-          <button
-            onClick={handleGoogleLogin}
-            className={`w-full flex items-center justify-center gap-3 transition px-4 pt-3 pb-2 rounded-lg font-semibold ${isLoading
-              ? "bg-gray-300 text-gray-500 cursor-not-allowed"
-              : "bg-indigo-600 hover:bg-indigo-700 text-white"
-              }`}
-          >
-            <img
-              src={googleLogo}
-              alt="logo"
-              className="w-5 h-5 -mt-1.5"
-            />
-            Continue with Google
-          </button>
-          {/* Toggle */}
-          <p className="text-sm text-gray-500 mt-4">
-            {isSignup ? "Already have an account?" : "Don't have an account?"}
-            <button
-              onClick={() => setIsSignup(!isSignup)}
-              className="ml-1 text-indigo-600"
-            >
-              {isSignup ? "Login" : "Sign up"}
-            </button>
-          </p>
-          </div>
+              {/* Divider */}
+              <div className="text-gray-700 text-md my-2">or</div>
+              <button
+                onClick={handleGoogleLogin}
+                className={`w-full flex items-center justify-center gap-3 transition pt-3 pb-2 rounded-lg font-semibold ${isLoading
+                  ? "bg-gray-300 text-gray-500 cursor-not-allowed"
+                  : "bg-indigo-600 hover:bg-indigo-700 text-white"
+                  }`}
+                disabled={isLoading}
+              >
+                <img
+                  src={googleLogo}
+                  alt="logo"
+                  className="w-5 h-5 -mt-1.5"
+                />
+                Continue with Google
+              </button>
+              {/* Toggle */}
+              <p className="text-sm text-gray-500 mt-4">
+                {isSignup ? "Already have an account?" : "Don't have an account?"}
+                <button
+                  onClick={() => setIsSignup(!isSignup)}
+                  className="ml-1 text-indigo-600"
+                >
+                  {isSignup ? "Login" : "Sign up"}
+                </button>
+              </p>
+            </div>
           )
           }
         </div>
@@ -160,76 +165,3 @@ export default function Login({ onLogin }) {
     </div>
   );
 }
-
-
-// export default function Login({ onLogin }) {
-
-  
-
-//   return (
-//     <div className="w-full min-h-screen flex items-center justify-center bg-gray-100">
-//       <div className="w-full max-w-md p-8 bg-white rounded-2xl shadow-lg text-center">
-
-//         <img src={appLogo} className="w-16 mx-auto mb-4" />
-
-//         <h1 className="text-2xl font-bold mb-2">
-//           {isSignup ? "Create Account" : "Welcome Back"}
-//         </h1>
-
-//         <p className="text-gray-500 mb-6">
-//           OneSync Web Dashboard
-//         </p>
-
-//         {/* Email input */}
-//         <input
-//           type="email"
-//           placeholder="Email"
-//           className="w-full mb-3 px-3 py-2 border rounded-lg"
-//           value={email}
-//           onChange={(e) => setEmail(e.target.value)}
-//         />
-
-//         {/* Password input */}
-//         <input
-//           type="password"
-//           placeholder="Password"
-//           className="w-full mb-4 px-3 py-2 border rounded-lg"
-//           value={password}
-//           onChange={(e) => setPassword(e.target.value)}
-//         />
-
-//         {/* Email login/signup */}
-//         <button
-//           onClick={handleEmailAuth}
-//           className="w-full bg-indigo-600 hover:bg-indigo-700 text-white py-2 rounded-lg mb-4"
-//         >
-//           {isSignup ? "Sign Up" : "Login"}
-//         </button>
-
-//         {/* Divider */}
-//         <div className="text-gray-400 text-sm mb-4">or</div>
-
-//         {/* Google login */}
-//         <button
-//           onClick={handleGoogleLogin}
-//           className="w-full flex items-center justify-center gap-2 bg-white border border-gray-300 px-4 py-2 rounded-lg"
-//         >
-//           <img src={googleLogo} className="w-5 h-5" />
-//           Continue with Google
-//         </button>
-
-//         {/* Toggle */}
-//         <p className="text-sm text-gray-500 mt-4">
-//           {isSignup ? "Already have an account?" : "Don't have an account?"}
-//           <button
-//             onClick={() => setIsSignup(!isSignup)}
-//             className="ml-1 text-indigo-600"
-//           >
-//             {isSignup ? "Login" : "Sign up"}
-//           </button>
-//         </p>
-
-//       </div>
-//     </div>
-//   );
-// }
