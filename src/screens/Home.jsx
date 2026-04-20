@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 import { listenToMessages } from "../services/notifications";
-import { hasPasswordProvider, linkPassword } from '../services/auth';
+import { hasPasswordProvider, linkPassword, updateUserPassword } from '../services/auth';
 import { ArrowRightOnRectangleIcon, Cog6ToothIcon } from "@heroicons/react/24/outline";
 import { QRCodeCanvas } from "qrcode.react";
 
@@ -96,7 +96,7 @@ export default function Home({ user, onToggleNotifications, onLogout }) {
             </h3>
 
             <input
-              type="password"
+              type="text"
               placeholder="Enter password"
               className="w-full border px-3 py-2 rounded-lg mb-4"
               value={password}
@@ -107,7 +107,10 @@ export default function Home({ user, onToggleNotifications, onLogout }) {
               <button
                 onClick={async () => {
                   try {
-                    await linkPassword(user.email, password);
+                    if(!hasPasswordProvider(user))
+                      await linkPassword(user.email, password);
+                    else
+                      await updateUserPassword(password);
                     alert("Password added!");
                     setShowPasswordForm(false);
                   } catch (err) {
@@ -156,17 +159,15 @@ export default function Home({ user, onToggleNotifications, onLogout }) {
             <div className="absolute right-0 top-10 p-2 w-56 bg-white border border-gray-200 rounded-lg shadow-lg z-50">
 
               {/* Set Password */}
-              {!hasPasswordProvider(user) && (
-                <button
+              <button
                   onClick={() => {
                     setShowPasswordForm(true);
                     setShowMenu(false);
                   }}
                   className="w-full text-left px-4 py-2 text-sm hover:bg-gray-100 rounded-lg"
                 >
-                  Set Password
-                </button>
-              )}
+                  {hasPasswordProvider(user) ? "Update Password" : "Set Password"}
+              </button>
 
               {/* Logout */}
               <button
@@ -194,7 +195,7 @@ export default function Home({ user, onToggleNotifications, onLogout }) {
             <div className="flex flex-col items-center mb-6">
               <div className="p-2 bg-white rounded-lg border">
                 <QRCodeCanvas
-                  value="https://github.com/one-dhiraj/onesync/releases/latest"
+                  value={`https://github.com/one-dhiraj/onesync/releases/download/${import.meta.env.RELEASE_TAG}/${import.meta.env.RELEASE_TITLE}.apk`}
                   size={160}
                 />
               </div>

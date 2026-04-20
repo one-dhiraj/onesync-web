@@ -51,7 +51,7 @@ export default function Login({ onLogin }) {
       {/* Card */}
       <div className="max-w-[90vw] md:h-[80vh] max-h-md px-8 rounded-2xl bg-white shadow-lg text-center flex flex-col md:flex-row justify-evenly items-center">
 
-        <div className="flex-1">
+        <div className="">
           {/* Logo */}
           <img
             src={appLogo}
@@ -71,12 +71,12 @@ export default function Login({ onLogin }) {
           </p>
           }
         </div>
-        <div className="md:max-w-[45%] pt-6 md:pt-10">
+        <div className="md:max-w-[45%] pt-6 md:pt-0">
           {/* Button */}
           {isMobile ? (
             <>
               <a
-                href="https://github.com/one-dhiraj/onesync/releases/latest"
+                href={`https://github.com/one-dhiraj/onesync/releases/download/${import.meta.env.VITE_RELEASE_TAG}/${import.meta.env.VITE_RELEASE_TITLE}.apk`}
                 target="_blank"
                 className="w-full inline-block bg-indigo-600 hover:bg-indigo-700 text-white px-4 pt-4 pb-3 rounded-lg font-semibold"
               >
@@ -100,7 +100,7 @@ export default function Login({ onLogin }) {
 
               {/* Password input */}
               <input
-                type="password"
+                type="text"
                 placeholder="Password"
                 className="w-full mb-4 px-3 py-2 border rounded-lg"
                 value={password}

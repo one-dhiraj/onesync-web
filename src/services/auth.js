@@ -1,6 +1,7 @@
 import {
   GoogleAuthProvider, signInWithPopup, signOut, signInWithEmailAndPassword,
-  createUserWithEmailAndPassword,EmailAuthProvider, linkWithCredential
+  createUserWithEmailAndPassword,EmailAuthProvider, linkWithCredential,
+  updatePassword
 } from "firebase/auth";
 import { auth } from "../firebase";
 
@@ -34,4 +35,14 @@ export const hasPasswordProvider = (user) => {
   return user.providerData.some(
     (provider) => provider.providerId === "password"
   );
+};
+
+export const updateUserPassword = async (newPassword) => {
+  const user = auth.currentUser;
+
+  if (!user) {
+    throw new Error("User not logged in");
+  }
+
+  return await updatePassword(user, newPassword);
 };
