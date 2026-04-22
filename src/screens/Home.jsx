@@ -11,6 +11,7 @@ export default function Home({ user, onToggleNotifications, onLogout }) {
 
   const [password, setPassword] = useState("");
   const [showPasswordForm, setShowPasswordForm] = useState(false);
+  const [updatingPassword, setUpdatingPassword] = useState(false);
   const [showMenu, setShowMenu] = useState(false);
   const menuRef = useRef(null);
 
@@ -106,18 +107,25 @@ export default function Home({ user, onToggleNotifications, onLogout }) {
             <div className="flex gap-2">
               <button
                 onClick={async () => {
+                  setUpdatingPassword(true);
                   try {
-                    if(!hasPasswordProvider(user))
+                    if (!hasPasswordProvider(user)) {
                       await linkPassword(user.email, password);
-                    else
+                      alert("Password added!");
+                    } else {
                       await updateUserPassword(password);
-                    alert("Password added!");
+                      alert("Password updated!");
+                    }
                     setShowPasswordForm(false);
                   } catch (err) {
                     alert(err.message);
+                  } finally {
+                    setUpdatingPassword(false);
                   }
                 }}
-                className="flex-1 bg-indigo-600 text-white py-2 rounded-lg"
+                className={`flex-1 py-2 rounded-lg ${
+                  updatingPassword ? "bg-gray-300 text-gray-500 cursor-not-allowed"
+                  : "bg-indigo-600 text-white"}`}
               >
                 Save
               </button>
@@ -160,13 +168,13 @@ export default function Home({ user, onToggleNotifications, onLogout }) {
 
               {/* Set Password */}
               <button
-                  onClick={() => {
-                    setShowPasswordForm(true);
-                    setShowMenu(false);
-                  }}
-                  className="w-full text-left px-4 py-2 text-sm hover:bg-gray-100 rounded-lg"
-                >
-                  {hasPasswordProvider(user) ? "Update Password" : "Set Password"}
+                onClick={() => {
+                  setShowPasswordForm(true);
+                  setShowMenu(false);
+                }}
+                className="w-full text-left px-4 py-2 text-sm hover:bg-gray-100 rounded-lg"
+              >
+                {hasPasswordProvider(user) ? "Update Password" : "Set Password"}
               </button>
 
               {/* Logout */}
@@ -195,7 +203,7 @@ export default function Home({ user, onToggleNotifications, onLogout }) {
             <div className="flex flex-col items-center mb-6">
               <div className="p-2 bg-white rounded-lg border">
                 <QRCodeCanvas
-                  value={`https://github.com/one-dhiraj/onesync/releases/download/${import.meta.env.RELEASE_TAG}/${import.meta.env.RELEASE_TITLE}.apk`}
+                  value={`https://github.com/one-dhiraj/onesync/releases/download/${import.meta.env.VITE_RELEASE_TAG}/${import.meta.env.VITE_RELEASE_TITLE}.apk`}
                   size={160}
                 />
               </div>
