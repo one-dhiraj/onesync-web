@@ -1,6 +1,8 @@
 import { useState, useEffect } from "react";
 import Home from "./screens/Home";
 import Login from "./screens/Login";
+// import HomePage from "./screens/HomePage";
+import Landing from "./screens/Landing";
 import LiveNotifications from "./screens/LiveNotifications";
 import { requestPermissionAndToken, listenToMessages } from './services/notifications';
 import { saveDevice } from "./services/device";
@@ -68,17 +70,21 @@ export default function App() {
 
   return (
     <Routes>
-      <Route path="/" element={user ? <Home user={user} onToggleNotifications={handleToggleNotifications} onLogout={handleLogout} /> : <Login onLogin={setUser} />} />
+      <Route
+        path="/"
+        element={user
+          ? <Home
+              user={user}
+              onToggleNotifications={handleToggleNotifications}
+              onLogout={handleLogout}
+            />
+          : <Landing
+              onLogin={setUser} />}
+            />
       <Route
         path="/liveNotifications"
         element={<LiveNotifications />}
       />
     </Routes>
   );
-
-  if (!user) {
-    return <Login onLogin={setUser} />;
-  }
-
-  return <Home user={user} onToggleNotifications={handleToggleNotifications} onLogout={handleLogout} />;
 }
