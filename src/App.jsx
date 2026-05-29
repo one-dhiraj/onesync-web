@@ -1,7 +1,5 @@
 import { useState, useEffect } from "react";
 import Home from "./screens/Home";
-import Login from "./screens/Login";
-import HomePage from "./screens/HomePage";
 import Landing from "./screens/Landing";
 import LiveNotifications from "./screens/LiveNotifications";
 import {
