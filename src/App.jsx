@@ -1,12 +1,15 @@
 import { useState, useEffect } from "react";
 import Home from "./screens/Home";
 import Login from "./screens/Login";
-// import HomePage from "./screens/HomePage";
+import HomePage from "./screens/HomePage";
 import Landing from "./screens/Landing";
 import LiveNotifications from "./screens/LiveNotifications";
-import { requestPermissionAndToken, listenToMessages } from './services/notifications';
+import {
+  requestPermissionAndToken,
+  listenToMessages,
+} from "./services/notifications";
 import { saveDevice } from "./services/device";
-import { logout } from './services/auth';
+import { logout } from "./services/auth";
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "./firebase";
 import { Routes, Route } from "react-router-dom";
@@ -35,7 +38,11 @@ export default function App() {
 
     try {
       await saveDevice(user.uid, token, !notificationStatus);
-      alert(!notificationStatus ? "Device registered successfully 🚀" : "Device un-registered");
+      alert(
+        !notificationStatus
+          ? "Device registered successfully 🚀"
+          : "Device un-registered",
+      );
       return !notificationStatus;
     } catch (err) {
       console.error(err);
@@ -72,19 +79,19 @@ export default function App() {
     <Routes>
       <Route
         path="/"
-        element={user
-          ? <Home
+        element={
+          user ? (
+            <Home
               user={user}
               onToggleNotifications={handleToggleNotifications}
               onLogout={handleLogout}
             />
-          : <Landing
-              onLogin={setUser} />}
-            />
-      <Route
-        path="/liveNotifications"
-        element={<LiveNotifications />}
+          ) : (
+            <Landing onLogin={setUser} />
+          )
+        }
       />
+      <Route path="/liveNotifications" element={<LiveNotifications />} />
     </Routes>
   );
 }
